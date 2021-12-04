@@ -1,34 +1,36 @@
 {
-  "name": "a-crud",
-  "version": "1.0.0",
-  "description": "CRUD simples de alunos, com back-end em nodeJS e front-end em vue.",
-  "main": "index.js",
-  "scripts": {
-    "test": "npm start",
-    "start": "nodemon index"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/gevichiatto/a-crud.git"
-  },
-  "keywords": [
-    "CRUD",
-    "aluno",
-    "vue",
-    "node"
-  ],
-  "author": "Geovanne Vichiatto",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/gevichiatto/a-crud/issues"
-  },
-  "homepage": "https://github.com/gevichiatto/a-crud#readme",
-  "dependencies": {
-    "cors": "^2.8.5",
-    "express": "^4.17.1",
-    "http": "0.0.1-security",
-    "nodemon": "^2.0.15",
-    "pg": "^8.7.1",
-    "sequelize": "^6.12.0-alpha.1"
-  }
+	"name": "a-crud",
+	"version": "1.0.0",
+	"description": "CRUD simples de alunos, com back-end em nodeJS e front-end em vue.",
+	"main": "index.js",
+	"scripts": {
+		"test": "npm start",
+		"start": "nodemon index"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/gevichiatto/a-crud.git"
+	},
+	"keywords": [
+		"CRUD",
+		"aluno",
+		"vue",
+		"node"
+	],
+	"author": "Geovanne Vichiatto",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/gevichiatto/a-crud/issues"
+	},
+	"homepage": "https://github.com/gevichiatto/a-crud#readme",
+	"dependencies": {
+		"cors": "^2.8.5",
+		"dotenv": "^10.0.0",
+		"express": "^4.17.1",
+		"http": "0.0.1-security",
+		"nodemon": "^2.0.15",
+		"pg": "^8.7.1",
+		"sequelize": "^6.12.0-alpha.1",
+		"sequelize-cli": "^6.3.0"
+	}
 }
