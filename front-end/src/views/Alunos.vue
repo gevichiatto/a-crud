@@ -18,7 +18,7 @@
 					<tr v-for="i in items" :key="i">
 						<td>{{ i.nome }}</td>
 						<td>{{ i.endereco }}</td>
-						<td>{{ i.foto }}</td>
+						<td style="max-width: 50px"><b-img v-bind="mainProps" :src="i.foto"></b-img></td>
 						<td class="clicable">
 							<b-icon-pencil class="icon" v-b-modal.edit-modal title="Editar"></b-icon-pencil>
 							<b-icon-trash class="icon" v-b-modal.delete-modal title="Deletar"></b-icon-trash>
@@ -37,7 +37,7 @@
 				>
 					<b-form-input
 					id="input-1"
-					v-model="form.email"
+					v-model="form.nome"
 					type="email"
 					placeholder="Nome Completo"
 					required
@@ -47,7 +47,7 @@
 				<b-form-group id="input-group-2" label="Endereço:" label-for="input-2">
 					<b-form-input
 					id="input-2"
-					v-model="form.name"
+					v-model="form.endereco"
 					placeholder="Endereço"
 					required
 					></b-form-input>
@@ -73,26 +73,47 @@
 
 
 <script>
+import AlunosRestResource from '../services/alunos';
+
 export default ({
 	data() {
 		return {
-			items: [
-				{ foto: 40, nome: 'Dickerson', endereco: 'Macdonald' },
-          		{ foto: 21, nome: 'Larsen', endereco: 'Shaw' },
-          		{ foto: 89, nome: 'Geneva', endereco: 'Wilson' },
-          		{ foto: 38, nome: 'Jami', endereco: 'Carney' }
-			],
+			items: [],
 			form: {
-				email: '',
-				name: '',
-				food: null,
-				checked: []
+				nome: '',
+				edereco: '',
+				foto: []
 			},
-			foods: [{ text: 'Select One', value: null }, 'Carrots', 'Beans', 'Tomatoes', 'Corn'],
-			show: true
+			show: true,
+			mainProps: {
+				center: true,
+				fluidGrow: true,
+			}
 		}
 
+	},
+
+	created() {
+		this.getAlunos()
+	},
+
+	methods: {
+		async getAlunos() {
+			return AlunosRestResource.getAlunos().then(
+				(response) => {
+					console.log("Response: ", response)
+					for (var i = 0; i < response.length; i++) {
+						var bytes = new Uint8Array(response[i].foto.data);
+						var binary = bytes.reduce((data, b) => data += String.fromCharCode(b), '');
+						response[i].foto = "data:image/jpeg;base64," + btoa(binary); 
+					}
+					this.items = response 
+				}
+			)
+		}
 	}
+
+
 })
 </script>
 
