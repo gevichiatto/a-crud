@@ -10,10 +10,6 @@ const app = express();
 
 app.use(cors());
 
-//rotas
-
-app.get("/", function(req, res) {
-    res.send("<h1>Servidor está vivo</h1>");
-});
+app.use(require('./communications/rest/routes'));
 
 http.createServer(app).listen(3000, () => console.log("Servidor rodando local na porta 3000"));
