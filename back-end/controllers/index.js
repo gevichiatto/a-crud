@@ -16,18 +16,18 @@ function execCallback(res, err, code, ret, req) {
     if (err) {
         // Não retorna a msg de erro original para o client caso seja um erro interno
         if (code >= 500) {
-        logger(
-            req,
-            'emerg',
-            'controller callback error',
-            err.errorMessage,
-            (err.error && err.error.stack) || null,
-            moment().diff(req.momentInit, 'ms'),
-            code,
-        );
-        responseReturned = { error: 'Internal Server Error.' };
+            logger(
+                req,
+                'emerg',
+                'controller callback error',
+                err.errorMessage,
+                (err.error && err.error.stack) || null,
+                moment().diff(req.momentInit, 'ms'),
+                code,
+            );
+            responseReturned = { error: 'Internal Server Error.' };
         } else {
-        responseReturned = { error: err };
+            responseReturned = { error: err };
         }
     }
 

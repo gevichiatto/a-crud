@@ -11,3 +11,21 @@ exports.list = async (req, res, callback) => {
         }, typeof e === 'string' ? 400 : 500);
     }
 };
+
+exports.create = async (req, res, callback) => {
+    try {
+        let data = {
+            nome: req.body.nome,
+            endereco: req.body.endereco,
+            foto: req.body.foto
+        }
+
+        let result = await services.alunos.createAluno(data);
+        callback(null, 200, result)
+    } catch (e) {
+        callback({
+            errorMessage: "Falha ao inserir dados no banco de dados",
+            error: e
+        }, 500);
+    }
+};
