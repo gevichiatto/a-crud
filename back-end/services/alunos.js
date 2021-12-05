@@ -7,5 +7,9 @@ module.exports = {
 
     createAluno(data) {
         return repository.alunos.createAluno(data);
+    },
+
+    deleteByID(id) {
+        return repository.alunos.deleteByID(id);
     }
 };

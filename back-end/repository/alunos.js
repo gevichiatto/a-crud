@@ -11,5 +11,13 @@ module.exports = {
 
     createAluno(data) {
         return models.Alunos.create(data);
+    },
+
+    deleteByID(id) {
+        return models.Alunos.update({
+            deletedAt: new Date()
+        }, {
+            where: { id: id }
+        })
     }
 }

@@ -12,4 +12,8 @@ router.post('/', async (req, res) => {
     controllers.execute(req, res, await alunosController.create);
 })
 
+router.delete('/:id', async (req, res) => {
+    controllers.execute(req, res, await alunosController.delete)
+})
+
 module.exports = router;

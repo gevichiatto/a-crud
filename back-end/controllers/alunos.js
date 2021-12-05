@@ -29,3 +29,16 @@ exports.create = async (req, res, callback) => {
         }, 500);
     }
 };
+
+exports.delete = async (req, res, callback) => {
+    try {
+		let result = await services.alunos.deleteByID(req.params.id);
+
+        callback(null, 204, result);
+    } catch (e) {
+        callback({
+            errorMessage: "Falha ao recuperar dados no banco de dados",
+            error: e
+        }, 500);
+    }
+}
