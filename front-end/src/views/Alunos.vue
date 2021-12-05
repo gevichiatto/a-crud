@@ -21,7 +21,7 @@
 						<td style="max-width: 50px"><b-img v-bind="mainProps" :src="i.foto"></b-img></td>
 						<td class="clicable">
 							<b-icon-pencil class="icon" v-b-modal.edit-modal title="Editar" @click="editModal(i)"></b-icon-pencil>
-							<b-icon-trash class="icon" v-b-modal.delete-modal title="Deletar"></b-icon-trash>
+							<b-icon-trash class="icon" title="Deletar" @click="deletar(i.id)"></b-icon-trash>
 						</td>
 					</tr>
 				</tbody>
@@ -104,7 +104,6 @@
 					></b-form-file>
 				</b-form-group>
 		</b-modal> -->
-		<b-modal id="delete-modal">Modal Deletar</b-modal>
 	</div>
 </template>
 
@@ -191,6 +190,29 @@ export default ({
 				const reader = new FileReader();
 				reader.onload = resolve;
 				reader.readAsBinaryString(file);
+			})
+		},
+
+		deletar(id) {
+			this.$swal.fire({
+				title: 'Tem certeza disso?',
+				text: "Não será possível reverter essa ação!",
+				icon: 'warning',
+				showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				confirmButtonText: 'Sim, quero deletar!',
+				cancelButtonText: 'Cancelar'
+			}).then((result) => {
+				if (result.isConfirmed) {
+					AlunosRestResource.deleteAluno(id).then(() => {
+						this.$swal.fire(
+						'Deletado!',
+						'Registro de aluno deletado.',
+						'success'
+						)
+					});
+				}
 			})
 		}
 	}

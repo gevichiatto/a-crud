@@ -7,5 +7,9 @@ export default {
 
     async postAluno(aluno) {
         return api.execute('post', '/api/alunos', null, aluno)
+    },
+
+    deleteAluno(id) {
+        return api.execute('delete', `/api/alunos/${id}`)
     }
 }
