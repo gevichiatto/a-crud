@@ -1,4 +1,5 @@
 import axios from 'axios';
+import store from '../store';
 
 const apiRestHost = process.env.VUE_APP_BACKEND_HOST || 'localhost:3000';
 
