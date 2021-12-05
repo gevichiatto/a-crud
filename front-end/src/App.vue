@@ -8,6 +8,7 @@
 						<b-nav-item href="#/alunos">Alunos</b-nav-item>
 						<b-nav-item href="/" disabled>Notas</b-nav-item>
 						<b-nav-item href="/" disabled>Classes</b-nav-item>
+						<b-nav-item href="/" disabled>Calendário</b-nav-item>
 					</b-navbar-nav>
 				</b-collapse>
 			</b-navbar>
