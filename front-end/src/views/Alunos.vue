@@ -22,7 +22,7 @@
 										<td>{{ i.endereco }}</td>
 										<td style="max-width: 50px"><b-img v-bind="mainProps" :src="i.foto"></b-img></td>
 										<td class="clicable">
-											<b-icon-pencil class="icon" v-b-modal.edit-modal title="Editar" @click="editModal(i)"></b-icon-pencil>
+											<b-icon-pencil class="icon" v-b-modal.add-modal title="Editar" @click="editModal(i)"></b-icon-pencil>
 											<b-icon-trash class="icon" title="Deletar" @click="deletar(i.id)"></b-icon-trash>
 										</td>
 									</tr>
@@ -31,7 +31,7 @@
 				</div>
 			</b-container>
 		</div>
-		<b-modal id="add-modal" @ok="submitAdd(form)">
+		<b-modal id="add-modal" @ok="submitForm(form)" centered :title="modalTitle">
 			<b-form>
 				<b-form-group
 					id="input-group-1"
@@ -57,7 +57,7 @@
 				</b-form-group>
 
 				<b-form-group id="input-group3" label="Foto" laber-for="input-3">
-					<b-img v-bind="mainProps" :src="url" style="max-width: fit-content;height: 18em;"></b-img>
+					<b-img v-if="url" v-bind="mainProps" :src="url" style="max-width: fit-content; height: 18em; margin-bottom: 1rem;"></b-img>
 					<b-form-file
 					@change="loadImage"
 					accept="image/jpeg"
@@ -72,41 +72,6 @@
 				<b-button type="reset" variant="danger">Limpar</b-button> -->
 			</b-form>
 		</b-modal>
-		<!-- <b-modal id="edit-modal" @ok="submitEdit(form)">
-			<b-form-group
-					id="input-group-1"
-					label="Nome do(a) Aluno(a):"
-					label-for="input-1"
-				>
-					<b-form-input
-					id="input-1"
-					v-model="form.nome"
-					type="email"
-					placeholder="Nome Completo"
-					required
-					></b-form-input>
-				</b-form-group>
-
-				<b-form-group id="input-group-2" label="Endereço:" label-for="input-2">
-					<b-form-input
-					id="input-2"
-					v-model="form.endereco"
-					placeholder="Endereço"
-					required
-					></b-form-input>
-				</b-form-group>
-
-				<b-form-group id="input-group3" label="Foto:" laber-for="input-3">
-					<b-form-file
-					@change="loadImage"
-					accept="image/jpeg"
-					id="input-3"
-					placeholder="Escolha um arquivo ou arrastre pra cá"
-					required
-					v-model="form.foto"
-					></b-form-file>
-				</b-form-group>
-		</b-modal> -->
 	</div>
 </template>
 
@@ -131,7 +96,9 @@ export default ({
 			image: [],
 			url: '',
 			selectedFile: null,
-			obj: []
+			obj: [],
+			action: '',
+			modalTitle: ''
 		}
 
 	},
@@ -160,26 +127,50 @@ export default ({
 
 		editModal(element) {
 			this.form = JSON.parse(JSON.stringify(element));
+			this.url = this.form.foto
+			this.action = 'edit';
+			this.modalTitle = 'Editar registro de aluno'
 		},
 
-		submitEdit(form) {
-		},
-
-		async submitAdd(form) {
+		async submitForm(form) {
 			const image = await this.convertImage(this.obj);
 			form.foto = image.target.result;
-			await this.postAluno(form)
+			if (this.action == 'add') {
+				await this.postAluno(form).then((result) => {
+					if (result) {
+						this.$swal.fire({
+							title: 'Aluno(a) adicionado(a)!',
+							text: 'Registro de aluno adicionado.',
+							icon: 'success',
+							confirmButtonColor: 'rgba(84, 19, 153, 0.8)',
+						})
+					}
+				})
+			} else if (this.action == 'edit') {
+				await this.putAluno(form).then((result) => {
+					if (result) {
+						this.$swal.fire({
+							title: 'Atualizado!',
+							text: 'Registro de aluno atualizado.',
+							icon: 'success',
+							confirmButtonColor: 'rgba(84, 19, 153, 0.8)',
+						})
+					}
+				})
+			} else return;
 		},
 
 		resetForm() {
 			this.form = {
 				nome: '',
 				endereco: '',
-				foto: []
+				foto: ''
 			},
 			this.selectedFile = null,
 			this.url = '',
-			this.image = []
+			this.image = [],
+			this.action = 'add',
+			this.modalTitle = 'Adicionar registro de aluno'
 		},
 
 		loadImage(evt) {
@@ -198,8 +189,8 @@ export default ({
 
 		deletar(id) {
 			this.$swal.fire({
-				title: 'Tem certeza disso?',
-				text: "Não será possível reverter essa ação!",
+				title: 'Tem certeza que quer deletar esse registro?',
+				text: 'Não será possível reverter essa ação!',
 				icon: 'warning',
 				showCancelButton: true,
 				confirmButtonColor: '#589913',
