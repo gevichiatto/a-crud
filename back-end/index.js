@@ -24,8 +24,4 @@ app.use(require('./communications/rest/routes'));
 
 http.createServer(app).listen(3000, () => console.log("Servidor rodando local na porta 3000"));
 
-app.use(express.static("./dist"));
-app.get("*", function(req, res) {
-    console.log(req._parsedOriginalUrl.path, path.join(__dirname, "dist", "index.html"))
-    res.sendFile(path.join(__dirname, "../front-end/dist", "index.html"));
-});
+app.use(express.static("../front-end/dist"));
