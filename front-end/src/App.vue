@@ -1,5 +1,5 @@
 <template>
-	<div id="app">
+	<div id="app" title="aCrud">
 		<div>
 			<b-navbar style="background-color: #541399 !important;" toggleable="lg" type="dark" variant="info" class="nav-class">
 				<b-navbar-brand href="/">
