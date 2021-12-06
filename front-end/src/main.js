@@ -6,7 +6,8 @@ import VueSweetalert2 from 'vue-sweetalert2';
 
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
-import 'sweetalert2/dist/sweetalert2.min.css';
+import 'sweetalert2/dist/sweetalert2.min.css'
+import './components/global.css'
 
 Vue.config.productionTip = false
 
@@ -16,5 +17,5 @@ Vue.use(VueSweetalert2)
 
 new Vue({
 	router,
-	render: function (h) { return h(App) }
+	render: function (h) { return h(App) },
 }).$mount('#app')

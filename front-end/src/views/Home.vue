@@ -26,7 +26,7 @@
 			<b-button 
 			class="home-btn" 
 			disabled 
-			title="Notas">
+			title="Calendário">
 				<b-icon-calendar-week scale="5"></b-icon-calendar-week>
 			</b-button>
 		</div>
@@ -51,10 +51,11 @@ export default {
 	border-radius: 0.8rem !important;
 	border-color: unset !important;
 	transition: 100ms;
+	background-color: rgb(50, 12, 92) !important;
 }
 
 .home-btn:hover {
-	background-color: orange !important;
+	background-color: #589913 !important;
 	transform: scale(1.1)
 }
 </style>

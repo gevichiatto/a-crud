@@ -1,32 +1,35 @@
 <template>
 	<div class="alunos">
-		<div class="table-title">
-			<h2>Página dos alunos</h2>
-			<b-button v-b-modal.add-modal @click="resetForm()">Adicionar</b-button>
-		</div>
-		<div>
-			<table class="table">
-				<thead>
-					<tr>
-						<th>Nome</th>
-						<th>Endereço</th>
-						<th>Foto</th>
-						<th>Ação</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr v-for="i in items" :key="`tableRow${i.id}`">
-						<td>{{ i.nome }}</td>
-						<td>{{ i.endereco }}</td>
-						<td style="max-width: 50px"><b-img v-bind="mainProps" :src="i.foto"></b-img></td>
-						<td class="clicable">
-							<b-icon-pencil class="icon" v-b-modal.edit-modal title="Editar" @click="editModal(i)"></b-icon-pencil>
-							<b-icon-trash class="icon" title="Deletar" @click="deletar(i.id)"></b-icon-trash>
-						</td>
-					</tr>
-				</tbody>
-
-			</table>
+		<div class="wrapper">
+			<b-container fluid>
+				<div class="table-title">
+					<h2>Listagem de Alunos</h2>
+					<b-button class="add-aluno-btn" v-b-modal.add-modal @click="resetForm()">Adicionar</b-button>
+				</div>
+				<div>
+							<table class="table table-hover">
+								<thead>
+									<tr>
+										<th>Nome</th>
+										<th>Endereço</th>
+										<th>Foto</th>
+										<th>Ação</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr v-for="i in items" :key="`tableRow${i.id}`">
+										<td>{{ i.nome }}</td>
+										<td>{{ i.endereco }}</td>
+										<td style="max-width: 50px"><b-img v-bind="mainProps" :src="i.foto"></b-img></td>
+										<td class="clicable">
+											<b-icon-pencil class="icon" v-b-modal.edit-modal title="Editar" @click="editModal(i)"></b-icon-pencil>
+											<b-icon-trash class="icon" title="Deletar" @click="deletar(i.id)"></b-icon-trash>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+				</div>
+			</b-container>
 		</div>
 		<b-modal id="add-modal" @ok="submitAdd(form)">
 			<b-form>
@@ -199,18 +202,19 @@ export default ({
 				text: "Não será possível reverter essa ação!",
 				icon: 'warning',
 				showCancelButton: true,
-				confirmButtonColor: '#3085d6',
-				cancelButtonColor: '#d33',
+				confirmButtonColor: '#589913',
+				cancelButtonColor: '#991315',
 				confirmButtonText: 'Sim, quero deletar!',
 				cancelButtonText: 'Cancelar'
 			}).then((result) => {
 				if (result.isConfirmed) {
 					AlunosRestResource.deleteAluno(id).then(() => {
-						this.$swal.fire(
-						'Deletado!',
-						'Registro de aluno deletado.',
-						'success'
-						)
+						this.$swal.fire({
+							title: 'Deletado!',
+							text: 'Registro de aluno deletado.',
+							icon: 'success',
+							confirmButtonColor: 'rgba(84, 19, 153, 0.8)',
+						})
 					});
 				}
 			})
@@ -223,6 +227,15 @@ export default ({
 .table-title {
 	display: flex;
     justify-content: space-between;
+	margin-bottom: 2rem;
+}
+
+.wrapper {
+	border-top: 10px solid rgba(84, 19, 153, 0.2);
+	border-radius: 10px;
+	background-color: #fff;
+	margin-top: 3rem;
+	padding-block: 2rem;
 }
 
 .clicable {
@@ -234,6 +247,15 @@ export default ({
 }
 
 .icon:hover {
-	color: orange;
+	color: #589913;
 }
+
+.add-aluno-btn {
+	background-color: rgba(84, 19, 153, 0.7);
+}
+
+.add-aluno-btn:hover {
+	background-color: rgba(84, 19, 153, 1);
+}
+
 </style>
