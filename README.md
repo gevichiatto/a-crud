@@ -52,4 +52,4 @@ Após o comando finalizar sua execução, os arquivos estáticos gerados podem s
 
 
 ### Nuvem ###
-1. O sistema também pode ser encontrado seguindo o link https://3.144.144.228:3000 no seu navegador. Atualmente, o sistema está rodando em uma instância ec2 da AWS.
+1. O sistema também pode ser encontrado seguindo o link http://3.144.144.228:3000/#/ no seu navegador. Atualmente, o sistema está rodando em uma instância ec2 da AWS.
