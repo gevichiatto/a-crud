@@ -6,6 +6,7 @@ module.exports = {
         return models.Alunos.findAll({
             attributes: ["id", "nome", "endereco", "foto"],
             where: { deletedAt: null },
+            order: [["nome", "ASC"]],
             raw: true,
         });
     },
