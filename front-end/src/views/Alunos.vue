@@ -7,7 +7,7 @@
 					<b-button class="add-aluno-btn" v-b-modal.add-modal @click="resetForm()">Adicionar</b-button>
 				</div>
 				<div>
-							<table class="table table-hover">
+							<table class="table table-hover align-middle">
 								<thead>
 									<tr>
 										<th>Nome</th>
@@ -16,7 +16,7 @@
 										<th>Ação</th>
 									</tr>
 								</thead>
-								<tbody>
+								<tbody v-if="!tableIsLoading">
 									<tr v-for="i in items" :key="`tableRow${i.id}`">
 										<td>{{ i.nome }}</td>
 										<td>{{ i.endereco }}</td>
@@ -28,6 +28,10 @@
 									</tr>
 								</tbody>
 							</table>
+							<div v-if="tableIsLoading" class="loading">
+								<b-spinner class="align-middle"></b-spinner>
+								<strong>Carregando...</strong>
+							</div>
 				</div>
 			</b-container>
 		</div>
@@ -106,7 +110,8 @@ export default ({
 			obj: [],
 			action: '',
 			modalTitle: '',
-			loaded: false
+			loaded: false,
+			tableIsLoading: false,
 		}
 
 	},
@@ -121,6 +126,7 @@ export default ({
 
 	methods: {
 		async getAlunos() {
+			this.tableIsLoading = true;
 			return AlunosRestResource.getAlunos().then(
 				(response) => {
 					for (var i = 0; i < response.length; i++) {
@@ -128,6 +134,7 @@ export default ({
 						var binary = bytes.reduce((data, b) => data += String.fromCharCode(b), '');
 						response[i].foto = "data:image/jpeg;base64," + btoa(binary);
 					}
+					this.tableIsLoading = false;
 					this.items = response 
 				}
 			)
@@ -278,6 +285,10 @@ export default ({
 
 .add-aluno-btn:hover {
 	background-color: rgba(84, 19, 153, 1);
+}
+
+.loading {
+	color: rgba(153, 19, 21, 0.75);
 }
 
 </style>
