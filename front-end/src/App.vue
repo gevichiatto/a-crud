@@ -1,7 +1,7 @@
 <template>
 	<div id="app" title="aCrud">
 		<div>
-			<b-navbar style="background-color: #541399 !important;" toggleable="lg" type="dark" variant="info" class="nav-class">
+			<b-navbar style="background-color: #541399 !important;" toggleable="lg" type="dark" variant="info" class="nav-class nice-shadow">
 				<b-navbar-brand href="/">
 					<svg xmlns="http://www.w3.org/2000/svg" width="90" height="30" viewBox="0 0 900 300">
 						<path fill="#fff" id="Rounded_Rectangle_1" data-name="Rounded Rectangle 1" d="M80,0H820a80,80,0,0,1,80,80V300a0,0,0,0,1,0,0H0a0,0,0,0,1,0,0V80A80,80,0,0,1,80,0Z"/>
@@ -16,6 +16,11 @@
 						<b-nav-item href="/" disabled>Calendário</b-nav-item>
 					</b-navbar-nav>
 				</b-collapse>
+				<b-navbar-nav class="ml-auto">
+					<b-nav-item href="https://linkedin.com/in/gevichiatto" target="_blank">
+						<img src="./assets/linkedin-logo.svg">
+					</b-nav-item>
+				</b-navbar-nav>
 			</b-navbar>
 		</div>
 		<b-container fluid="md">

@@ -11,5 +11,9 @@ module.exports = {
 
     deleteByID(id) {
         return repository.alunos.deleteByID(id);
+    },
+
+    updateByID(id, data) {
+        return repository.alunos.updateByID(id, data);
     }
 };

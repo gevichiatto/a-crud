@@ -11,5 +11,9 @@ export default {
 
     deleteAluno(id) {
         return api.execute('delete', `/api/alunos/${id}`)
+    },
+
+    async updateAluno(aluno) {
+        return api.execute('put', `/api/alunos/${aluno.id}`, null, aluno)
     }
 }

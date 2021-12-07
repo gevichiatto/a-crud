@@ -14,7 +14,7 @@ module.exports = sequelize => {
 	alunos.init({
 		nome: Sequelize.DataTypes.STRING,
 		endereco: Sequelize.DataTypes.STRING,
-		foto: Sequelize.DataTypes.BLOB
+		foto: Sequelize.DataTypes.BLOB('long')
 	}, {
 		sequelize,
 		modelName: 'Alunos',
