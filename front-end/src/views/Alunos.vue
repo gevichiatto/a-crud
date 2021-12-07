@@ -23,7 +23,7 @@
 										<td style="max-width: 50px"><b-img v-bind="mainProps" :src="i.foto"></b-img></td>
 										<td class="clicable">
 											<b-icon-pencil class="icon" v-b-modal.add-modal title="Editar" @click="editModal(i)"></b-icon-pencil>
-											<b-icon-trash class="icon" title="Deletar" @click="deletar(i.id)"></b-icon-trash>
+											<b-icon-trash class="icon" title="Deletar" @click="deleteAluno(i.id)"></b-icon-trash>
 										</td>
 									</tr>
 								</tbody>
@@ -31,7 +31,7 @@
 				</div>
 			</b-container>
 		</div>
-		<b-modal id="add-modal" @ok="submitForm(form)" centered :title="modalTitle">
+		<b-modal id="add-modal" @ok="submitForm(form)" centered :title="modalTitle" @show="onModalLoaded()" @hidden="onModalHidden()">
 			<b-form>
 				<b-form-group
 					id="input-group-1"
@@ -56,20 +56,23 @@
 					></b-form-input>
 				</b-form-group>
 
-				<b-form-group id="input-group3" label="Foto" laber-for="input-3">
-					<b-img v-if="url" v-bind="mainProps" :src="url" style="max-width: fit-content; height: 18em; margin-bottom: 1rem;"></b-img>
-					<b-form-file
-					@change="loadImage"
+				<b-form-group id="input-group3" label="Foto" laber-for="input-3" v-if="loaded">
+					<picture-input
+					ref="pictureInput"
+					@change="onImageLoaded"
+					:width="300"
+					:height="300"
+					:hideChangeButton="true"
 					accept="image/jpeg"
-					id="input-3"
-					placeholder="Escolha um arquivo ou arrastre pra cá"
-					required
-					v-model="image"
-					></b-form-file>
+					buttonClass="ui button primary"
+					:crop="false"
+					:customStrings="{
+						upload: '<h1>Upload it!</h1>',
+						drag: 'Escolha um arquivo ou arrastre sua imagem pra cá'
+					}">
+					</picture-input>
 				</b-form-group>
 				
-				<!-- <b-button type="submit" variant="primary">Adicionar</b-button>
-				<b-button type="reset" variant="danger">Limpar</b-button> -->
 			</b-form>
 		</b-modal>
 	</div>
@@ -78,6 +81,7 @@
 
 <script>
 import AlunosRestResource from '../services/alunos';
+import PictureInput from 'vue-picture-input';
 
 export default ({
 	data() {
@@ -95,12 +99,16 @@ export default ({
 			},
 			image: [],
 			url: '',
-			selectedFile: null,
 			obj: [],
 			action: '',
-			modalTitle: ''
+			modalTitle: '',
+			loaded: false
 		}
 
+	},
+
+	components: {
+		PictureInput
 	},
 
 	created() {
@@ -133,8 +141,7 @@ export default ({
 		},
 
 		async submitForm(form) {
-			const image = await this.convertImage(this.obj);
-			form.foto = image.target.result;
+			form.foto = this.imageBase64URL;
 			if (this.action == 'add') {
 				await this.postAluno(form).then((result) => {
 					if (result) {
@@ -143,6 +150,10 @@ export default ({
 							text: 'Registro de aluno adicionado.',
 							icon: 'success',
 							confirmButtonColor: 'rgba(84, 19, 153, 0.8)',
+						}).then((result) => {
+							if (result) {
+								this.getAlunos();
+							}
 						})
 					}
 				})
@@ -154,6 +165,10 @@ export default ({
 							text: 'Registro de aluno atualizado.',
 							icon: 'success',
 							confirmButtonColor: 'rgba(84, 19, 153, 0.8)',
+						}).then((result) => {
+							if (result) {
+								this.getAlunos();
+							}
 						})
 					}
 				})
@@ -166,28 +181,13 @@ export default ({
 				endereco: '',
 				foto: ''
 			},
-			this.selectedFile = null,
 			this.url = '',
 			this.image = [],
 			this.action = 'add',
 			this.modalTitle = 'Adicionar registro de aluno'
 		},
 
-		loadImage(evt) {
-			evt.preventDefault()
-			this.url = URL.createObjectURL(evt.target.files[0]);
-			this.obj = evt.target.files[0];
-		},
-
-		async convertImage(file) {
-			return new Promise((resolve) => {
-				const reader = new FileReader();
-				reader.onload = resolve;
-				reader.readAsBinaryString(file);
-			})
-		},
-
-		deletar(id) {
+		deleteAluno(id) {
 			this.$swal.fire({
 				title: 'Tem certeza que quer deletar esse registro?',
 				text: 'Não será possível reverter essa ação!',
@@ -205,11 +205,33 @@ export default ({
 							text: 'Registro de aluno deletado.',
 							icon: 'success',
 							confirmButtonColor: 'rgba(84, 19, 153, 0.8)',
+						}).then((result) => {
+							if (result) {
+								this.getAlunos();
+							}
 						})
 					});
 				}
 			})
-		}
+		},
+
+		onImageLoaded() {
+			if (this.$refs.pictureInput.file) {
+      			this.image = this.$refs.pictureInput.file;
+				this.imageBase64URL = this.$refs.pictureInput.image
+    		}
+		},
+
+		onModalLoaded() {
+			var _this = this;
+			setTimeout(() => {
+				_this.loaded = true;
+			}, 1)
+		},
+
+		onModalHidden() {
+			this.loaded = false;
+		},
 	}
 })
 </script>

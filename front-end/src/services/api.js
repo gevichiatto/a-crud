@@ -1,7 +1,7 @@
 import axios from 'axios';
 import store from '../store';
 
-const apiRestHost = "3.144.144.228:3000";
+const apiRestHost = "localhost:3000";
 
 const client = axios.create({
 	baseURL: `//${apiRestHost}/`,
