@@ -12,7 +12,7 @@ Este é um sistema básico de cadastro de alunos.
 #### I - Back-end ####
 1. Clone o projeto deste repositório :)
 
-2. No diretório ./back-end, execute o seguinte comando para instalar as dependências do backend:
+2. No diretório ./back-end, execute o seguinte comando para instalar as dependências do back-end:
 ```
 npm install
 ```
@@ -49,3 +49,7 @@ npm run build
 Após o comando finalizar sua execução, os arquivos estáticos gerados podem ser encontrados no diretório ./dist. Esses arquivos podem ser servidos por um http server.
 
 5. Quando estiver com o serviço do front-end em execução simultaneamente ao serviço do back-end, acesse http://localhost:8080 para utilizar o sistema, com hot-reload no front-end.
+
+
+### Nuvem ###
+1. O sistema também pode ser encontrado seguindo o link https://3.144.144.228:3000 no seu navegador. Atualmente, o sistema está rodando em uma instância ec2 da AWS.
