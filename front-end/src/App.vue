@@ -16,6 +16,11 @@
 						<b-nav-item href="/" disabled>Calendário</b-nav-item>
 					</b-navbar-nav>
 				</b-collapse>
+				<b-navbar-nav class="ml-auto">
+					<b-nav-item href="https://linkedin.com/in/gevichiatto" target="_blank">
+						<img src="./assets/linkedin-logo.svg">
+					</b-nav-item>
+				</b-navbar-nav>
 			</b-navbar>
 		</div>
 		<b-container fluid="md">
