@@ -25,5 +25,17 @@ module.exports = {
         }, {
             where: { id: id }
         })
+    },
+
+    async updateByID(id, data) {
+        var img = await imageDataURI.decode(data.foto);
+        return models.Alunos.update({
+            nome: data.nome,
+            endereco: data.endereco,
+            foto: img.dataBuffer,
+            updatedAt: new Date()
+        }, { 
+            where: { id: id } 
+        })
     }
-}
+};

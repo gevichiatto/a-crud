@@ -41,4 +41,23 @@ exports.delete = async (req, res, callback) => {
             error: e
         }, 500);
     }
+};
+
+exports.update = async (req, res, callback) => {
+    try {
+        let data = {
+            nome: req.body.nome,
+            endereco: req.body.endereco,
+            foto: req.body.foto
+        };
+
+        let result = await services.alunos.updateByID(req.params.id, data);
+
+        callback(null, 200, result);
+    } catch (e) {
+        callback({
+            errorMessage: "Falha ao inserir dados no banco de dados",
+            error: e
+        }, 500);
+    }
 }
