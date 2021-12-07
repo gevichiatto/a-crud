@@ -66,6 +66,10 @@
 					accept="image/jpeg"
 					buttonClass="ui button primary"
 					:crop="false"
+					:prefill="url"
+					:prefillOptions="{
+						mediaType: 'image/jpeg'
+					}"
 					:customStrings="{
 						upload: '<h1>Upload it!</h1>',
 						drag: 'Escolha um arquivo ou arrastre sua imagem pra cá'
@@ -90,7 +94,7 @@ export default ({
 			form: {
 				nome: '',
 				edereco: '',
-				foto: []
+				foto: [],
 			},
 			show: true,
 			mainProps: {
@@ -135,9 +139,10 @@ export default ({
 
 		editModal(element) {
 			this.form = JSON.parse(JSON.stringify(element));
-			this.url = this.form.foto
+			this.form.id = element.id;
+			this.url = JSON.parse(JSON.stringify(this.form.foto));
 			this.action = 'edit';
-			this.modalTitle = 'Editar registro de aluno'
+			this.modalTitle = 'Editar registro de aluno';
 		},
 
 		async submitForm(form) {
@@ -158,7 +163,7 @@ export default ({
 					}
 				})
 			} else if (this.action == 'edit') {
-				await this.putAluno(form).then((result) => {
+				await this.updateAluno(form).then((result) => {
 					if (result) {
 						this.$swal.fire({
 							title: 'Atualizado!',
@@ -217,7 +222,7 @@ export default ({
 
 		onImageLoaded() {
 			if (this.$refs.pictureInput.file) {
-      			this.image = this.$refs.pictureInput.file;
+				this.image = this.$refs.pictureInput.file;
 				this.imageBase64URL = this.$refs.pictureInput.image
     		}
 		},
@@ -232,6 +237,10 @@ export default ({
 		onModalHidden() {
 			this.loaded = false;
 		},
+
+		async updateAluno(aluno) {
+			return await AlunosRestResource.updateAluno(aluno);
+		}
 	}
 })
 </script>
