@@ -18,6 +18,7 @@ npm install
 ```
 3. Execute as migrações do banco de dados e o semeie com dados iniciais, seguindo os seguintes comandos:
 ```
+npx sequelize db:create
 npx sequelize db:migrate
 npx sequelize db:seed:all
 ```
